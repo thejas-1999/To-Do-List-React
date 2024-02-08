@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 
 const ToDo = () => {
   const [items, setItems] = useState([
@@ -39,23 +40,21 @@ const ToDo = () => {
 
   return (
     <div className="app">
-      <div className="main-heading">
-        <h1>To-Do List</h1>
-      </div>
+      <div className="main-heading">{/* <h1>To-Do List</h1> */}</div>
 
       <div className="sub-heading">
         <br />
-        <h2>Whoop,It's {currentDay} 🌝 ☕</h2>
+        {/* <h2>Whoop,It's {currentDay} 🌝 ☕</h2> */}
       </div>
 
       <div className="input"></div>
       <div className="todos">
         <ul>
           {items.map((item) => (
-            <li className="item" key={items.id}>
+            <li className="todo" key={items.id}>
               <input type="checkbox" checked={items.checked} />
               <label>{item.item}</label>
-              <button>Delete</button>
+              <FaTrashAlt role="button" tabIndex="0" />
             </li>
           ))}
         </ul>
