@@ -19,7 +19,7 @@ const ToDo = () => {
       item: "Grape",
     },
     {
-      id: 1,
+      id: 4,
       checked: false,
       item: "Rice",
     },
@@ -38,6 +38,14 @@ const ToDo = () => {
   ];
   const currentDay = daysOfWeek[dayOfWeek];
 
+  const handleCheck = (id) => {
+    const listItems = items.map((item) =>
+      item.id === id ? { ...item, checked: !item.checked } : item
+    );
+    setItems(listItems);
+    localStorage.setItem("shoppinglist", JSON.stringify(listItems));
+  };
+
   return (
     <div className="app">
       <div className="main-heading">{/* <h1>To-Do List</h1> */}</div>
@@ -51,9 +59,18 @@ const ToDo = () => {
       <div className="todos">
         <ul>
           {items.map((item) => (
-            <li className="todo" key={items.id}>
-              <input type="checkbox" checked={items.checked} />
-              <label>{item.item}</label>
+            <li className="todo" key={item.id}>
+              <input
+                type="checkbox"
+                onChange={() => handleCheck(item.id)}
+                checked={item.checked}
+              />
+              <label
+                onDoubleClick={() => handleCheck(item.id)}
+                style={item.checked ? { textDecoration: "line-through" } : null}
+              >
+                {item.item}
+              </label>
               <FaTrashAlt role="button" tabIndex="0" />
             </li>
           ))}
