@@ -1,9 +1,12 @@
-import { useState } from "react";
-
 import "./App.css";
+import ToDo from "./Components/ToDo";
 
 function App() {
-  return <>Hello</>;
+  return (
+    <>
+      <ToDo />
+    </>
+  );
 }
 
 export default App;
