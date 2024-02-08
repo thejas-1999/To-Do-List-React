@@ -1,4 +1,29 @@
+import { useState } from "react";
+
 const ToDo = () => {
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      checked: false,
+      item: "Sugar",
+    },
+    {
+      id: 2,
+      checked: false,
+      item: "Lemon",
+    },
+    {
+      id: 3,
+      checked: true,
+      item: "Grape",
+    },
+    {
+      id: 1,
+      checked: false,
+      item: "Rice",
+    },
+  ]);
+
   const currentDate = new Date();
   const dayOfWeek = currentDate.getDay();
   const daysOfWeek = [
@@ -13,16 +38,27 @@ const ToDo = () => {
   const currentDay = daysOfWeek[dayOfWeek];
 
   return (
-    <div>
-      <div className="app">
-        <div className="main-heading">
-          <h1>To-Do List</h1>
-        </div>
+    <div className="app">
+      <div className="main-heading">
+        <h1>To-Do List</h1>
+      </div>
 
-        <div className="sub-heading">
-          <br />
-          <h2>Whoop,It's {currentDay} 🌝 ☕</h2>
-        </div>
+      <div className="sub-heading">
+        <br />
+        <h2>Whoop,It's {currentDay} 🌝 ☕</h2>
+      </div>
+
+      <div className="input"></div>
+      <div className="todos">
+        <ul>
+          {items.map((item) => (
+            <li className="item" key={items.id}>
+              <input type="checkbox" checked={items.checked} />
+              <label>{item.item}</label>
+              <button>Delete</button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

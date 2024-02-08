@@ -5,6 +5,7 @@
 
 body {
   background-color: #020631;
+  color: white;
 }
 
 .app {
@@ -21,4 +22,22 @@ body {
 .app h1,
 h2 {
   color: white;
+}
+
+.app .input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app .input {
+  margin-top: 0.8em;
+  width: 20em;
+  height: 2em;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px;
 }
