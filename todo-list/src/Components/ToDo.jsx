@@ -2,28 +2,9 @@ import { useState } from "react";
 import { FaTrashAlt, FaPlus } from "react-icons/fa";
 
 const ToDo = () => {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      checked: false,
-      item: "item1",
-    },
-    {
-      id: 2,
-      checked: false,
-      item: "item2",
-    },
-    {
-      id: 3,
-      checked: true,
-      item: "item3",
-    },
-    {
-      id: 4,
-      checked: false,
-      item: "item4",
-    },
-  ]);
+  const [items, setItems] = useState(
+    JSON.parse(localStorage.getItem("shoppinglist"))
+  );
 
   const [newItem, setNewItem] = useState("");
 
@@ -34,19 +15,6 @@ const ToDo = () => {
     setItems(listItems);
     localStorage.setItem("shoppinglist", JSON.stringify(listItems));
   };
-
-  const currentDate = new Date();
-  const dayOfWeek = currentDate.getDay();
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  const currentDay = daysOfWeek[dayOfWeek];
 
   const handleCheck = (id) => {
     const listItems = items.map((item) =>
@@ -71,14 +39,16 @@ const ToDo = () => {
 
   return (
     <div className="app">
-      <div className="main-heading">{/* <h1>To-Do List</h1> */}</div>
+      <div className="header">
+        <h1>To-Do List</h1>
 
-      <div className="sub-heading">
-        {/* <h2>Whoop,It's {currentDay} 🌝 ☕</h2> */}
+        <h2>
+          Whoop,It's{" "}
+          {new Date().toLocaleDateString("en-US", { weekday: "long" })}🌝 ☕
+        </h2>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="input">
         <input
-          className="input"
           type="text"
           autoFocus
           id="addItem"
@@ -96,11 +66,13 @@ const ToDo = () => {
           <ul>
             {items.map((item) => (
               <li className="todo" key={item.id}>
-                <input
-                  type="checkbox"
-                  onChange={() => handleCheck(item.id)}
-                  checked={item.checked}
-                />
+                <div className="left">
+                  <input
+                    type="checkbox"
+                    onChange={() => handleCheck(item.id)}
+                    checked={item.checked}
+                  />
+                </div>
                 <label
                   onDoubleClick={() => handleCheck(item.id)}
                   style={
@@ -109,16 +81,20 @@ const ToDo = () => {
                 >
                   {item.item}
                 </label>
-                <FaTrashAlt
-                  onClick={() => handleDelete(item.id)}
-                  role="button"
-                  tabIndex="0"
-                />
+                <div className="right">
+                  <FaTrashAlt
+                    onClick={() => handleDelete(item.id)}
+                    role="button"
+                    tabIndex="0"
+                  />
+                </div>
               </li>
             ))}
           </ul>
         ) : (
-          <p style={{ marginTop: "2rem" }}>YOUR TO-DO'S ARE EMPTY</p>
+          <p style={{ marginTop: "2rem" }} className="empty">
+            YOUR TO-DO'S ARE EMPTY
+          </p>
         )}
       </div>
     </div>
