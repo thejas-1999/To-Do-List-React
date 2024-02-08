@@ -1,29 +1,39 @@
 import { useState } from "react";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaPlus } from "react-icons/fa";
 
 const ToDo = () => {
   const [items, setItems] = useState([
     {
       id: 1,
       checked: false,
-      item: "Sugar",
+      item: "item1",
     },
     {
       id: 2,
       checked: false,
-      item: "Lemon",
+      item: "item2",
     },
     {
       id: 3,
       checked: true,
-      item: "Grape",
+      item: "item3",
     },
     {
       id: 4,
       checked: false,
-      item: "Rice",
+      item: "item4",
     },
   ]);
+
+  const [newItem, setNewItem] = useState("");
+
+  const addItem = (item) => {
+    const id = items.length ? items[items.length - 1].id + 1 : item;
+    const myNewItem = { id, checked: false, item };
+    const listItems = [...items, myNewItem];
+    setItems(listItems);
+    localStorage.setItem("shoppinglist", JSON.stringify(listItems));
+  };
 
   const currentDate = new Date();
   const dayOfWeek = currentDate.getDay();
@@ -52,16 +62,35 @@ const ToDo = () => {
     localStorage.setItem("shoppinglist", JSON.stringify(listItems));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newItem) return;
+    addItem(newItem);
+    setNewItem("");
+  };
+
   return (
     <div className="app">
       <div className="main-heading">{/* <h1>To-Do List</h1> */}</div>
 
       <div className="sub-heading">
-        <br />
         {/* <h2>Whoop,It's {currentDay} 🌝 ☕</h2> */}
       </div>
-
-      <div className="input"></div>
+      <form onSubmit={handleSubmit}>
+        <input
+          className="input"
+          type="text"
+          autoFocus
+          id="addItem"
+          placeholder="what to do...."
+          required
+          value={newItem}
+          onChange={(e) => setNewItem(e.target.value)}
+        />
+        <button type="submit" aria-label="Add Item">
+          <FaPlus />
+        </button>
+      </form>
       <div className="todos">
         {items.length ? (
           <ul>
@@ -89,7 +118,7 @@ const ToDo = () => {
             ))}
           </ul>
         ) : (
-          <p style={{ marginTop: "2rem" }}>YOUR TO-DO IS EMPTY</p>
+          <p style={{ marginTop: "2rem" }}>YOUR TO-DO'S ARE EMPTY</p>
         )}
       </div>
     </div>
