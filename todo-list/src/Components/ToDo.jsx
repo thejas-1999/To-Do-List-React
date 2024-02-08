@@ -46,6 +46,12 @@ const ToDo = () => {
     localStorage.setItem("shoppinglist", JSON.stringify(listItems));
   };
 
+  const handleDelete = (id) => {
+    const listItems = items.filter((item) => item.id !== id);
+    setItems(listItems);
+    localStorage.setItem("shoppinglist", JSON.stringify(listItems));
+  };
+
   return (
     <div className="app">
       <div className="main-heading">{/* <h1>To-Do List</h1> */}</div>
@@ -57,24 +63,34 @@ const ToDo = () => {
 
       <div className="input"></div>
       <div className="todos">
-        <ul>
-          {items.map((item) => (
-            <li className="todo" key={item.id}>
-              <input
-                type="checkbox"
-                onChange={() => handleCheck(item.id)}
-                checked={item.checked}
-              />
-              <label
-                onDoubleClick={() => handleCheck(item.id)}
-                style={item.checked ? { textDecoration: "line-through" } : null}
-              >
-                {item.item}
-              </label>
-              <FaTrashAlt role="button" tabIndex="0" />
-            </li>
-          ))}
-        </ul>
+        {items.length ? (
+          <ul>
+            {items.map((item) => (
+              <li className="todo" key={item.id}>
+                <input
+                  type="checkbox"
+                  onChange={() => handleCheck(item.id)}
+                  checked={item.checked}
+                />
+                <label
+                  onDoubleClick={() => handleCheck(item.id)}
+                  style={
+                    item.checked ? { textDecoration: "line-through" } : null
+                  }
+                >
+                  {item.item}
+                </label>
+                <FaTrashAlt
+                  onClick={() => handleDelete(item.id)}
+                  role="button"
+                  tabIndex="0"
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p style={{ marginTop: "2rem" }}>YOUR TO-DO IS EMPTY</p>
+        )}
       </div>
     </div>
   );
